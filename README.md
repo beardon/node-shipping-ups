@@ -7,7 +7,7 @@
 ## Usage
 
 ```js
-  const UpsApi = require('shipping-ups');
+const UpsApi = require('shipping-ups');
 
 const ups = new UpsApi({
     environment: 'sandbox', // or live
@@ -20,29 +20,29 @@ const ups = new UpsApi({
 const realWeight = ups.dimensionalWeight(weight, length, width, height);
 
 ups.time_in_transit(..., (err, res) => {
-...
+    ...
 });
 
 ups.address_validation(..., (err, result) => {
-...
+    ...
 });
 
 ups.track(..., (err, result) => {
-...
+    ...
 });
 
 ups.rates(..., (err, result) => {
-...
+    ...
 });
 
 // Generate a Digest for a specific Rate
 ups.confirm(..., (err, result) => {
-...
+    ...
 });
 
 // Purchase the Label
 ups.accept(..., (err, result) => {
-...
+    ...
 });
 
 // Pickup Request
@@ -62,28 +62,28 @@ ups.cancel_pickup(..., (err, result) => {
 
 // Void the Shipment
 ups.void(..., (err, result) => {
-...
+    ...
 });
 ```
 
 ### Freight Methods
 
 ```js
-  ups.freight_rate(..., (err, res) => {
-      ...
-  });
+ups.freight_rate(..., (err, res) => {
+    ...
+});
 
-  ups.freight_ship(..., (err, res) => {
-      ...
-  });
+ups.freight_ship(..., (err, res) => {
+    ...
+});
 
-  ups.freight_pickup(..., (err, res) => {
-      ...
-  });
+ups.freight_pickup(..., (err, res) => {
+    ...
+});
 
-  ups.cancel_freight_pickup(..., (err, res) => {
-      ...
-  });
+ups.cancel_freight_pickup(..., (err, res) => {
+    ...
+});
 ```
 
 ### new upsAPI(options)
@@ -91,17 +91,17 @@ ups.void(..., (err, result) => {
 Initialize your API bindings
 
 ```js
-  options = {
-      imperial: true, // for inches/lbs, false for metric cm/kgs
-      currency: 'USD',
-      environment: 'sandbox',
-      access_key: '',
-      username: '',
-      password: '',
-      pretty: false,
-      user_agent: 'uh-sem-blee, Co | typefoo',
-      debug: false,
-  }
+options = {
+    imperial: true, // for inches/lbs, false for metric cm/kgs
+    currency: 'USD',
+    environment: 'sandbox',
+    access_key: '',
+    username: '',
+    password: '',
+    pretty: false,
+    user_agent: 'uh-sem-blee, Co | typefoo',
+    debug: false,
+}
 ```
 
 ### dimensionalWeight(weight, length, width, height)
@@ -143,24 +143,24 @@ All request below can have the following optional options passed in an object:
 Calculate the time in transit for a shipment
 
 ```js
-  data = {
-      from: {
-          city: 'Dover',
-          state_code: 'OH',
-          postal_code: '44622',
-          country_code: 'US'
-      },
-      to: {
-          city: 'Charlotte',
-          state_code: 'NC',
-          postal_code: '28205',
-          country_code: 'US'
-      },
-      weight: 10, // set imperial to false for KGS
-      pickup_date: 'YYYYMMDD',
-      total_packages: 1, // number of packages in shipment
-      value: 999999999.99, // Invoice value, set currency in options
-  }
+data = {
+    from: {
+        city: 'Dover',
+        state_code: 'OH',
+        postal_code: '44622',
+        country_code: 'US'
+    },
+    to: {
+        city: 'Charlotte',
+        state_code: 'NC',
+        postal_code: '28205',
+        country_code: 'US'
+    },
+    weight: 10, // set imperial to false for KGS
+    pickup_date: 'YYYYMMDD',
+    total_packages: 1, // number of packages in shipment
+    value: 999999999.99, // Invoice value, set currency in options
+}
 ```
 
 ### address_validation(data, [options,] callback)
@@ -168,21 +168,21 @@ Calculate the time in transit for a shipment
 Validates an address
 
 ```js
-  data = {
-      request_option: 3, // 1, 2, or 3 per UPS docs
-      // 1 - Address Validation
-      // 2 - Address Classification
-      // 3 - Address Validation and Address Classification.
-      name: 'Customer Name',
-      company: 'Company Name',
-      address_line_1: 'Address Line 1',
-      address_line_2: 'Address Line 2',
-      address_line_3: 'Address Line 3',
-      city: 'Dover',
-      state_code: 'OH',
-      postal_code: '44622',
-      country_code: 'US',
-  }
+data = {
+    request_option: 3, // 1, 2, or 3 per UPS docs
+    // 1 - Address Validation
+    // 2 - Address Classification
+    // 3 - Address Validation and Address Classification.
+    name: 'Customer Name',
+    company: 'Company Name',
+    address_line_1: 'Address Line 1',
+    address_line_2: 'Address Line 2',
+    address_line_3: 'Address Line 3',
+    city: 'Dover',
+    state_code: 'OH',
+    postal_code: '44622',
+    country_code: 'US',
+}
 ```
 
 ### track(tracking_number, [options,] callback)
@@ -190,9 +190,9 @@ Validates an address
 Get a shipment's tracking information with `tracking_number` as the ID
 
 ```js
-  options = {
-      latest: true, // default false, will get only the latest tracking info, otherwise retrieves history
-  }
+options = {
+    latest: true, // default false, will get only the latest tracking info, otherwise retrieves history
+}
 ```
 
 ### rates(data, [options,] callback)
@@ -200,122 +200,24 @@ Get a shipment's tracking information with `tracking_number` as the ID
 Get a list of shipping rates
 
 ```js
-  data = {
-      pickup_type: 'daily_pickup', // optional, can be: 'daily_pickup', 'customer_counter', 'one_time_pickup', 'on_call_air', 'suggested_retail_rates', 'letter_center', 'air_service_center'
-      pickup_type_code: '02', // optional, overwrites pickup_type
-      customer_classification: '00', // optional, need more details about what this does
-      shipper: {
-          name: 'Type Foo',
-          shipper_number: 'SHIPPER_NUMBER', // optional, but recommended for accurate rating
-          phone_number: '', // optional
-          fax_number: '', // optional
-          email_address: '', // optional
-          tax_identification_number: '', // optional
-          address: {
-              address_line_1: '123 Fake Address',
-              city: 'Dover',
-              state_code: 'OH',
-              country_code: 'US',
-              postal_code: '44622',
-          },
-      },
-      ship_to: {
-          company_name: 'Company Name', // or person's name
-          attention_name: '', // optional
-          phone_number: '', // optional
-          fax_number: '', // optional
-          email_address: '', // optional
-          tax_identification_number: '', // optional
-          location_id: '', //optional, for specific locations
-          address: {
-              address_line_1: '3456 Fake Address', // optional
-              city: 'Charlotte', // optional
-              state_code: 'NC', // optional, required for negotiated rates
-              country_code: 'US',
-              postal_code: '28205',
-              residential: true, // optional, can be useful for accurate rating
-          },
-      },
-      ship_from: { // optional, use if different from shipper address
-          company_name: 'Company Name', // or person's name
-          attention_name: 'Attention Name',
-          phone_number: '', // optional
-          tax_identification_number: '', // optional
-          address: {
-              address_line_1: '123 Fake Address',
-              city: 'Dover',
-              state_code: 'OH',
-              country_code: 'US',
-              postal_code: '44622',
-          },
-      },
-      sold_to: { // optional, The person or company who imports and pays any duties due on the current shipment, required if Invoice of NAFTA CO is requested
-          option: '01', // optional, applies to NAFTA CO form
-          company_name: 'Company Name', // or person's name
-          attention_name: 'Attention Name',
-          phone_number: '', // optional
-          tax_identification_number: '', // optional
-          address: {
-              address_line_1: '123 Fake Address',
-              city: 'Dover',
-              state_code: 'OH',
-              country_code: 'US',
-              postal_code: '44622',
-          },
-      },
-      service: '03', // optional, will rate this specific service.
-      services: [ // optional, you can specify which rates to look for -- performs multiple requests, so be careful not to do too many
-          '03'
-      ],
-      return_service: '9', // optional, will provide a UPS Return Service specification
-      packages: [
-          {
-              packaging_type: '02', // optional, packaging type code
-              weight: 10,
-              description: 'My Package', // optional
-              delivery_confirmation_type: 2, // optional, 1 or 2
-              insured_value: 1000.00, // optional, 2 decimals
-              dimensions: { // optional, integers: 0-108 for imperial, 0-270 for metric
-                  length: 12,
-                  width: 12,
-                  height: 24,
-              },
-          },
-      ],
-  }
-
-  options = {
-      negotiated_rates: true, // Optional, but if truthy then the NegotiatedRatesIndicator will always be placed (even without state/province code). Useful for countries without provinces.
-  }
-```
-
-### confirm(data, [options,] callback)
-
-Pick a shipping rate
-
-```js
-  data = {
-      service_code: '03', // required for selected rate
-      return_service: '9', // optional, will provide a UPS Return Service specification
-      saturday_delivery: true, // optional, will indicate Saturday Delivery
-      pickup_type: 'daily_pickup', // optional, can be: 'daily_pickup', 'customer_counter', 'one_time_pickup', 'on_call_air', 'suggested_retail_rates', 'letter_center', 'air_service_center'
-      pickup_type_code: '02', // optional, overwrites pickup_type
-      customer_classification: '00', // optional, need more details about what this does
-      label_type: 'EPL', // optional, will default to 'GIF'
-      shipper: {
-          name: 'Type Foo',
-          shipper_number: 'SHIPPER_NUMBER', // optional, but recommended for accurate rating
-          phone_number: '', // optional
-          fax_number: '', // optional
-          email_address: '', // optional
-          tax_identification_number: '', // optional
-          address: {
-              address_line_1: '123 Fake Address',
-              city: 'Dover',
-              state_code: 'OH',
-              country_code: 'US',
-              postal_code: '44622',
-          },
+data = {
+    pickup_type: 'daily_pickup', // optional, can be: 'daily_pickup', 'customer_counter', 'one_time_pickup', 'on_call_air', 'suggested_retail_rates', 'letter_center', 'air_service_center'
+    pickup_type_code: '02', // optional, overwrites pickup_type
+    customer_classification: '00', // optional, need more details about what this does
+    shipper: {
+        name: 'Type Foo',
+        shipper_number: 'SHIPPER_NUMBER', // optional, but recommended for accurate rating
+        phone_number: '', // optional
+        fax_number: '', // optional
+        email_address: '', // optional
+        tax_identification_number: '', // optional
+        address: {
+            address_line_1: '123 Fake Address',
+            city: 'Dover',
+            state_code: 'OH',
+            country_code: 'US',
+            postal_code: '44622',
+        },
     },
     ship_to: {
         company_name: 'Company Name', // or person's name
@@ -361,7 +263,12 @@ Pick a shipping rate
             postal_code: '44622',
         },
     },
-    packages: [ // at least one package is required
+    service: '03', // optional, will rate this specific service.
+    services: [ // optional, you can specify which rates to look for -- performs multiple requests, so be careful not to do too many
+        '03'
+    ],
+    return_service: '9', // optional, will provide a UPS Return Service specification
+    packages: [
         {
             packaging_type: '02', // optional, packaging type code
             weight: 10,
@@ -373,22 +280,115 @@ Pick a shipping rate
                 width: 12,
                 height: 24,
             },
-            reference_number: 'ABC123' // optional
-            reference_number: { // optional, object format code/value keypair
-                code: 'PM',
-                value: 'ABC123',
-            },
-            reference_number: [ // optional, array format, can be strings or objects in code/value keypair format
-                'ABC123',
-                'WWWABC123',
-            ],
         },
     ],
-  }
+}
 
-  options = {
-      negotiated_rates: true, // See rates options.
-  }
+options = {
+    negotiated_rates: true, // Optional, but if truthy then the NegotiatedRatesIndicator will always be placed (even without state/province code). Useful for countries without provinces.
+}
+```
+
+### confirm(data, [options,] callback)
+
+Pick a shipping rate
+
+```js
+data = {
+    service_code: '03', // required for selected rate
+    return_service: '9', // optional, will provide a UPS Return Service specification
+    saturday_delivery: true, // optional, will indicate Saturday Delivery
+    pickup_type: 'daily_pickup', // optional, can be: 'daily_pickup', 'customer_counter', 'one_time_pickup', 'on_call_air', 'suggested_retail_rates', 'letter_center', 'air_service_center'
+    pickup_type_code: '02', // optional, overwrites pickup_type
+    customer_classification: '00', // optional, need more details about what this does
+    label_type: 'EPL', // optional, will default to 'GIF'
+    shipper: {
+        name: 'Type Foo',
+        shipper_number: 'SHIPPER_NUMBER', // optional, but recommended for accurate rating
+        phone_number: '', // optional
+        fax_number: '', // optional
+        email_address: '', // optional
+        tax_identification_number: '', // optional
+        address: {
+            address_line_1: '123 Fake Address',
+            city: 'Dover',
+            state_code: 'OH',
+            country_code: 'US',
+            postal_code: '44622',
+        },
+  },
+  ship_to: {
+      company_name: 'Company Name', // or person's name
+      attention_name: '', // optional
+      phone_number: '', // optional
+      fax_number: '', // optional
+      email_address: '', // optional
+      tax_identification_number: '', // optional
+      location_id: '', //optional, for specific locations
+      address: {
+          address_line_1: '3456 Fake Address', // optional
+          city: 'Charlotte', // optional
+          state_code: 'NC', // optional, required for negotiated rates
+          country_code: 'US',
+          postal_code: '28205',
+          residential: true, // optional, can be useful for accurate rating
+      },
+  },
+  ship_from: { // optional, use if different from shipper address
+      company_name: 'Company Name', // or person's name
+      attention_name: 'Attention Name',
+      phone_number: '', // optional
+      tax_identification_number: '', // optional
+      address: {
+          address_line_1: '123 Fake Address',
+          city: 'Dover',
+          state_code: 'OH',
+          country_code: 'US',
+          postal_code: '44622',
+      },
+  },
+  sold_to: { // optional, The person or company who imports and pays any duties due on the current shipment, required if Invoice of NAFTA CO is requested
+      option: '01', // optional, applies to NAFTA CO form
+      company_name: 'Company Name', // or person's name
+      attention_name: 'Attention Name',
+      phone_number: '', // optional
+      tax_identification_number: '', // optional
+      address: {
+          address_line_1: '123 Fake Address',
+          city: 'Dover',
+          state_code: 'OH',
+          country_code: 'US',
+          postal_code: '44622',
+      },
+  },
+  packages: [ // at least one package is required
+      {
+          packaging_type: '02', // optional, packaging type code
+          weight: 10,
+          description: 'My Package', // optional
+          delivery_confirmation_type: 2, // optional, 1 or 2
+          insured_value: 1000.00, // optional, 2 decimals
+          dimensions: { // optional, integers: 0-108 for imperial, 0-270 for metric
+              length: 12,
+              width: 12,
+              height: 24,
+          },
+          reference_number: 'ABC123' // optional
+          reference_number: { // optional, object format code/value keypair
+              code: 'PM',
+              value: 'ABC123',
+          },
+          reference_number: [ // optional, array format, can be strings or objects in code/value keypair format
+              'ABC123',
+              'WWWABC123',
+          ],
+      },
+  ],
+}
+
+options = {
+    negotiated_rates: true, // See rates options.
+}
 ```
 
 ### accept(shipment_digest, [options,] callback)
@@ -396,41 +396,41 @@ Pick a shipping rate
 Purchase a shipping label and tracking number
 
 ```js
-  shipment_digest = 'SHIPMENTDIGEST'; // big data string
+shipment_digest = 'SHIPMENTDIGEST'; // big data string
 ```
 
 ### pickup(pickup_creation_data, callback)
 
 ```js
-  ups.pickup({
-      rate_pickup_indicator: 'Y',
-      shipper_account: 'ABC123',
-      pickup_date: '20141223',
-      eariest_time_ready: '0800',
-      latest_time_ready: '1200',
-      pickup_address: {
-          company_name: 'Pat Stewart',
-          contact_name: 'Pat Stewart',
-          address_line_1: '2311 York Road',
-          city: 'Timonium',
-          state_code: 'MD',
-          postal_code: '21093',
-          country_code: 'US',
-          phone_number: '5555555555',
-      },
-      weight: 5.5,
-      pickup_piece: [
-          {
-              service_code: '003',
-              quantity: 1,
-              container_code: '01',
-          },
-      ],
-      payment_method: '01',
-  }, (err, res) => {
-      if (err) return console.error(util.inspect(err, { depth: null }));
-      console.log(util.inspect(res, { depth: null }));
-  });
+ups.pickup({
+    rate_pickup_indicator: 'Y',
+    shipper_account: 'ABC123',
+    pickup_date: '20141223',
+    eariest_time_ready: '0800',
+    latest_time_ready: '1200',
+    pickup_address: {
+        company_name: 'Pat Stewart',
+        contact_name: 'Pat Stewart',
+        address_line_1: '2311 York Road',
+        city: 'Timonium',
+        state_code: 'MD',
+        postal_code: '21093',
+        country_code: 'US',
+        phone_number: '5555555555',
+    },
+    weight: 5.5,
+    pickup_piece: [
+        {
+            service_code: '003',
+            quantity: 1,
+            container_code: '01',
+        },
+    ],
+    payment_method: '01',
+}, (err, res) => {
+    if (err) return console.error(util.inspect(err, { depth: null }));
+    console.log(util.inspect(res, { depth: null }));
+});
 ```
 
 ### pickup_rate(pickup_rate_data, callback)
@@ -444,16 +444,16 @@ TBD
 ### void(data, [options,] callback)
 
 ```js
-  data = '1ZTRACKINGNUMBER';
+data = '1ZTRACKINGNUMBER';
 ```
 
 OR
 
 ```js
-  data = {
-      shipment_identification_number: '1ZSHIPMENTIDNUMBER',
-      tracking_numbers: [ '1ZTRACKINGNUMBER', '1ZTRACKINGNUMBER' ], // optional
-  }
+data = {
+    shipment_identification_number: '1ZSHIPMENTIDNUMBER',
+    tracking_numbers: [ '1ZTRACKINGNUMBER', '1ZTRACKINGNUMBER' ], // optional
+}
 ```
 
 Void a previously created order
@@ -465,61 +465,61 @@ Call the Freight Rating API
 These are example fields which cover the basic required fields. More should be added to cover all the features of the api.
 
 ```js
-  ups.freight_rate({
-      ship_from: {
-          name: 'Test My Company',
-          address: {
-              address_line_1: '1234 Test Name Rd',
-              city: 'Charlotte',
-              state_code: 'NC',
-              postal_code: '28262',
-              country_code: 'US',
-          },
-      },
-      ship_to: {
-          name: 'John Doe',
-          address: {
-              address_line_1: '4567 Another Road Ct',
-              city: 'Dover',
-              state_code: 'OH',
-              postal_code: '44622',
-              country_code: 'US',
-          },
-      },
-      payer: {
-          name: 'Ron Rosef',
-          address: {
-              address_line_1: '867 Five Three Oh Nine',
-              city: 'Charlotte',
-              state_code: 'NC',
-              postal_code: '28262',
-              country_code: 'US',
-          },
-          shipper_number: 'ABC123',
-      },
-      billing_option: '10',
-      service_code: '308',
-      handling_unit_one: {
-          quantity: '20',
-          code: 'PLT'
-      },
-      commodity: {
-          description: 'A huge bag of something',
-          weight: '750',
-          number_of_pieces: '45',
-          packaging_type: 'BAG',
-          freight_class: '60',
-      },
-  }, (err, res) => {
-      if (err) return console.error(err);
-      console.log(util.inspect(res, { depth: null }));
-  });
+ups.freight_rate({
+    ship_from: {
+        name: 'Test My Company',
+        address: {
+            address_line_1: '1234 Test Name Rd',
+            city: 'Charlotte',
+            state_code: 'NC',
+            postal_code: '28262',
+            country_code: 'US',
+        },
+    },
+    ship_to: {
+        name: 'John Doe',
+        address: {
+            address_line_1: '4567 Another Road Ct',
+            city: 'Dover',
+            state_code: 'OH',
+            postal_code: '44622',
+            country_code: 'US',
+        },
+    },
+    payer: {
+        name: 'Ron Rosef',
+        address: {
+            address_line_1: '867 Five Three Oh Nine',
+            city: 'Charlotte',
+            state_code: 'NC',
+            postal_code: '28262',
+            country_code: 'US',
+        },
+        shipper_number: 'ABC123',
+    },
+    billing_option: '10',
+    service_code: '308',
+    handling_unit_one: {
+        quantity: '20',
+        code: 'PLT'
+    },
+    commodity: {
+        description: 'A huge bag of something',
+        weight: '750',
+        number_of_pieces: '45',
+        packaging_type: 'BAG',
+        freight_class: '60',
+    },
+}, (err, res) => {
+    if (err) return console.error(err);
+    console.log(util.inspect(res, { depth: null }));
+});
 ```
 
 ### freight_ship(data, [options,] callback)
 
 ```js
-  ups.freight_ship({
+ups.freight_ship({
     request_option: 1, // optional, 1 for ground, 2 for air
     customer_context: 'Add description', // optional
     shipment_shipper_number: '222006',

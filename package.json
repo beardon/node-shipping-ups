@@ -1,53 +1,7 @@
 {
-  "_args": [
-    [
-      "shipping-ups@0.5.7",
-      "F:\\fpp\\fpp-api-server"
-    ]
-  ],
-  "_from": "shipping-ups@0.5.7",
-  "_id": "shipping-ups@0.5.7",
-  "_inBundle": false,
-  "_integrity": "sha1-vj3LoaA2ZCxZ8O+9rvfgjpn28YQ=",
-  "_location": "/shipping-ups",
-  "_phantomChildren": {
-    "first-chunk-stream": "0.1.0",
-    "is-utf8": "0.2.1",
-    "request": "2.26.0",
-    "sax": "1.2.4",
-    "selectn": "0.9.6"
-  },
-  "_requested": {
-    "type": "version",
-    "registry": true,
-    "raw": "shipping-ups@0.5.7",
-    "name": "shipping-ups",
-    "escapedName": "shipping-ups",
-    "rawSpec": "0.5.7",
-    "saveSpec": null,
-    "fetchSpec": "0.5.7"
-  },
-  "_requiredBy": [
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/shipping-ups/-/shipping-ups-0.5.7.tgz",
-  "_spec": "0.5.7",
-  "_where": "F:\\fpp\\fpp-api-server",
-  "author": {
-    "name": "uh-sem-blee, Co"
-  },
-  "bugs": {
-    "url": "https://github.com/uh-sem-blee/node-shipping-ups/issues"
-  },
-  "dependencies": {
-    "node.extend": "^1.1.5",
-    "soap": "^0.9.1",
-    "xml2js": "^0.4.15",
-    "xmlbuilder": "^2.6.4"
-  },
+  "name": "@beardon/shipping-ups",
   "description": "UPS API bindings for Node.JS",
-  "directories": {},
-  "homepage": "https://github.com/uh-sem-blee/node-shipping-ups#readme",
+  "version": "0.6.0",
   "keywords": [
     "shipping",
     "shipping integration",
@@ -68,15 +22,36 @@
     "transaction references",
     "ups freight"
   ],
-  "license": "AGPL-3.0",
-  "main": "./lib/index.js",
-  "name": "shipping-ups",
+  "homepage": "https://github.com/beardon/node-shipping-ups",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/uh-sem-blee/node-shipping-ups.git"
+    "url": "https://github.com/beardon/node-shipping-ups.git"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "bugs": {
+    "url": "https://github.com/beardon/node-shipping-ups/issues",
+    "email": "aaron.bean@beardon.com"
   },
-  "version": "0.5.7"
+  "author": {
+    "name": "uh-sem-blee, Co"
+  },
+  "contributors": [
+    {
+      "name": "Aaron Bean",
+      "email": "aaron.bean@beardon.com",
+      "url": "https://github.com/aaronbean"
+    }
+  ],
+  "main": "./lib/index.js",
+  "license": "AGPL-3.0",
+  "dependencies": {
+    "node.extend": "^1.1.8",
+    "soap": "^1.0.0",
+    "xml2js": "^0.6.2",
+    "xmlbuilder": "^5.0.1"
+  },
+  "overrides": {
+    "soap": {
+      "axios": "^1.0.0"
+    }
+  }
 }

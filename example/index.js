@@ -1,14 +1,13 @@
-'use strict';
+const fs = require('node:fs');
+const util = require('node:util');
 
-var upsAPI = require('../lib/index');
-var util = require('util');
-var fs = require('fs');
+const UpsApi = require('../lib/index');
 
-var ups = new upsAPI({
+const ups = new UpsApi({
     environment: 'sandbox', // or live
     access_key: 'UPSACCESSKEY',
     username: 'UPSUSERNAME',
-    password: 'UPSPASSWORD'
+    password: 'UPSPASSWORD',
 });
 
 ups.time_in_transit({
@@ -16,20 +15,17 @@ ups.time_in_transit({
         city: 'Dover',
         state_code: 'OH',
         postal_code: '44622',
-        country_code: 'US'
+        country_code: 'US',
     },
     to: {
         city: 'Charlotte',
         state_code: 'NC',
         postal_code: '28205',
-        country_code: 'US'
-    }
-}, function(err, res) {
-    if(err) {
-        console.log(err);
-    }
-
-    console.log(util.inspect(res, {depth: null}));
+        country_code: 'US',
+    },
+}, (err, res) => {
+    if (err) console.error(err);
+    console.log(util.inspect(res, { depth: null }));
 });
 
 ups.address_validation({
@@ -38,13 +34,10 @@ ups.address_validation({
     city: 'Charlotte',
     state_code: 'NC',
     postal_code: '28205',
-    country_code: 'US'
-}, function(err, res) {
-    if(err) {
-        console.log(err);
-    }
-
-    console.log(util.inspect(res, {depth: null}));
+    country_code: 'US',
+}, (err, res) => {
+    if (err) console.error(err);
+    console.log(util.inspect(res, { depth: null }));
 });
 
 ups.rates({
@@ -55,7 +48,7 @@ ups.rates({
             city: 'Dover',
             state_code: 'OH',
             country_code: 'US',
-            postal_code: '44622'
+            postal_code: '44622',
         }
     },
     ship_to: {
@@ -65,29 +58,24 @@ ups.rates({
             city: 'Charlotte',
             state_code: 'NC',
             country_code: 'US',
-            postal_code: '28205'
-        }
+            postal_code: '28205',
+        },
     },
     packages: [
         {
             description: 'My Package',
-            weight: 10
-        }
-    ]
-}, function(err, res) {
-    if(err) {
-        return console.log(err);
-    }
-    console.log(util.inspect(res, {depth: null}));
+            weight: 10,
+        },
+    ],
+}, (err, res) => {
+    if (err) return console.error(err);
+    console.log(util.inspect(res, { depth: null }));
     // should return an array of rates
 });
 
-ups.track('1ZY291F40369744809', function(err, res) {
-    if(err) {
-        return console.log(err);
-    }
-
-    console.log(util.inspect(res, {depth: null}));
+ups.track('1ZY291F40369744809', (err, res) => {
+    if (err) return console.log(err);
+    console.log(util.inspect(res, { depth: null }));
 });
 
 ups.confirm({
@@ -99,8 +87,8 @@ ups.confirm({
             city: 'Dover',
             state_code: 'OH',
             country_code: 'US',
-            postal_code: '44622'
-        }
+            postal_code: '44622',
+        },
     },
     ship_to: {
         company_name: 'Uhsem Blee',
@@ -109,43 +97,42 @@ ups.confirm({
             city: 'Charlotte',
             state_code: 'NC',
             country_code: 'US',
-            postal_code: '28205'
-        }
+            postal_code: '28205',
+        },
     },
     packages: [
         {
             description: 'My Package',
-            weight: 10
-        }
-    ]
-}, {transaction_id: 'ABC123', extra_params: {Shipment: {ShipmentServiceOptions: {Notification: {
+            weight: 10,
+        },
+    ],
+}, {
+    transaction_id: 'ABC123', extra_params: {
+        Shipment: {
+            ShipmentServiceOptions: {
+                Notification: {
                     NotificationCode: '2',
                     EMailMessage: {
                         EMailAddress: 'hello@myemailaddress.com',
                         UndeliverableEMailAddress: 'noreply@myemailaddress.com',
                         FromEMailAddress: 'from@myemailaddress.com',
                         Memo: 'We thought you might like to know',
-                        Subject: 'Your package has shipped from our store'
-                    }
-                }}}}}, function(err, res) {
-    if(err) {
-        return console.log(err);
-    }
-
-    //console.log(util.inspect(res, {depth: null}));
-    ups.accept(res.ShipmentDigest, function(err, res) {
-        if(err) {
-            return console.log(err);
-        }
-
-        fs.writeFile('./label.gif', new Buffer(res.ShipmentResults.PackageResults.LabelImage.GraphicImage, "base64"), function(err) {
-            ups.void(res.ShipmentResults.ShipmentIdentificationNumber, function(err, res) {
+                        Subject: 'Your package has shipped from our store',
+                    },
+                },
+            },
+        },
+    },
+}, (err, res) => {
+    if (err) return console.error(err);
+    // console.log(util.inspect(res, {depth: null}));
+    ups.accept(res.ShipmentDigest, (err, res) => {
+        if (err) return console.error(err);
+        fs.writeFile('./label.gif', new Buffer(res.ShipmentResults.PackageResults.LabelImage.GraphicImage, 'base64'), (err) => {
+            ups.void(res.ShipmentResults.ShipmentIdentificationNumber, (err, res) => {
                 // {shipment_identification_number: '1Z648616E192760718'}
-                if(err) {
-                    return console.log(err);
-                }
-
-                console.log(util.inspect(res, {depth: null}));
+                if (err) return console.error(err);
+                console.log(util.inspect(res, { depth: null }));
             })
         });
     });

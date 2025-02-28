@@ -70,7 +70,7 @@
   ],
   "license": "AGPL-3.0",
   "main": "./lib/index.js",
-  "name": "shipping-ups",
+  "name": "@beardon/shipping-ups",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/uh-sem-blee/node-shipping-ups.git"

@@ -1,5 +1,7 @@
 #shipping-ups
 
+Since [uh-sem-blee](https://github.com/uh-sem-blee)'s NPM has been delisted, this is taking its place for (now deprecated) UPS API calls.
+
 ## Install
 
 `npm install shipping-ups`
@@ -7,7 +9,7 @@
 ## Usage
 
 ```js
-  var upsAPI = require('shipping-ups');
+var upsAPI = require('shipping-ups');
 
 var ups = new upsAPI({
     environment: 'sandbox', // or live
